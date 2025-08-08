@@ -52,16 +52,19 @@ Una aplicación de escritorio simple para extraer texto de archivos PDF escanead
    - Elegir la carpeta de destino
    - Hacer clic en "Procesar PDF"
 
-## Crear ejecutable portable
+## Crear ejecutable e instalador
 
 1. Instalar PyInstaller:
    ```bash
    pip install pyinstaller
    ```
 
-2. Crear el ejecutable:
+2. Crear el ejecutable (carpeta):
    ```bash
-   pyinstaller --onefile --windowed src/app.py
+    pyinstaller --clean --noconfirm pdf_extractor.spec
    ```
+    Esto genera la carpeta `dist/PDFTextExtractor` que incluye la app, `Tesseract-OCR`, `poppler` y `resources`.
 
-El ejecutable se creará en la carpeta `dist` y podrá ser copiado y ejecutado en cualquier computadora Windows (siempre que tenga Tesseract OCR y Poppler instalados).
+3. Crear instalador (Inno Setup):
+    - Instala Inno Setup.
+    - Abre `installer.iss` y compílalo, o ejecuta Inno Setup desde línea de comando apuntando a `installer.iss`.

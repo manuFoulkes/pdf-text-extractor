@@ -1,6 +1,35 @@
 # Python
 __pycache__/
 *.py[cod]
+*.pyo
+
+# Virtual envs
+venv/
+.venv/
+
+# Build artifacts
+build/
+dist/
+Output/
+
+# Vendor OCR binaries (provided locally for packaging, no commit)
+Tesseract-OCR/
+poppler/
+
+# PyInstaller cache
+/*.spec.save
+
+# OS
+Thumbs.db
+*.DS_Store
+
+# IDE
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.py[cod]
 *.class
 
 # Virtual Environment
