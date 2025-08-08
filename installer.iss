@@ -8,10 +8,10 @@ AppId={{PDF-TEXT-EXTRACTOR-2025}}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppPublisher={#MyAppPublisher}
-; Instalar en Program Files de 64-bit
+; Instalar en Program Files de 64 bits y marcar instalador como x64
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
-DefaultDirName={autopf64}\{#MyAppName}
+DefaultDirName={pf64}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 OutputBaseFilename=PDFTextExtractor_Setup
@@ -20,7 +20,6 @@ SolidCompression=yes
 WizardStyle=modern
 DisableDirPage=no
 DisableProgramGroupPage=no
-PrivilegesRequired=admin
 
 [Files]
 ; Archivos principales de la aplicación (build de PyInstaller carpeta)
