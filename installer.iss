@@ -8,10 +8,10 @@ AppId={{PDF-TEXT-EXTRACTOR-2025}}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 AppPublisher={#MyAppPublisher}
-; Instalar en Program Files (64-bit) en sistemas x64
+; Instalar en Program Files de 64-bit
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
-DefaultDirName={autopf}\{#MyAppName}
+DefaultDirName={autopf64}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 OutputBaseFilename=PDFTextExtractor_Setup
@@ -20,6 +20,7 @@ SolidCompression=yes
 WizardStyle=modern
 DisableDirPage=no
 DisableProgramGroupPage=no
+PrivilegesRequired=admin
 
 [Files]
 ; Archivos principales de la aplicación (build de PyInstaller carpeta)
@@ -37,9 +38,6 @@ Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\PDFTextExtractor.exe"; Ta
 
 [Tasks]
 Name: "desktopicon"; Description: "Crear acceso directo en el escritorio"; Flags: unchecked
-
-[InstallDelete]
-Type: files; Name: "{app}\PDFExtractor.exe"
 
 [Code]
 
