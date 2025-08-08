@@ -3,6 +3,10 @@ import threading
 from tkinter import filedialog
 import customtkinter as ctk
 from pdf_processor import PDFProcessor
+from utils import setup_environment
+
+# Configurar el entorno antes de iniciar la aplicación
+setup_environment()
 
 class App(ctk.CTk):
     def __init__(self):
@@ -121,17 +125,55 @@ class App(ctk.CTk):
             output_path = os.path.join(self.output_dir, f"{base_name}.txt")
 
             # Procesar PDF
+            print("Iniciando procesamiento del PDF...")  # Debug
             processor.process_pdf(self.pdf_path, output_path)
+            print("PDF procesado exitosamente")  # Debug
 
             # Actualizar UI al terminar
-            self.status_label.configure(text="¡Proceso completado!")
+            self.after(0, lambda: self.status_label.configure(text="¡Proceso completado!"))
         except Exception as e:
-            self.status_label.configure(text=f"Error: {str(e)}")
+            # Mostrar error en una ventana emergente en el hilo principal
+            def show_error(error_message):
+                error_window = ctk.CTkToplevel(self)
+                error_window.title("Error")
+                error_window.geometry("500x300")
+                
+                # Hacer que la ventana sea modal
+                error_window.transient(self)
+                error_window.grab_set()
+                
+                # Agregar mensaje de error con scroll
+                error_frame = ctk.CTkFrame(error_window)
+                error_frame.pack(fill="both", expand=True, padx=20, pady=20)
+                
+                error_label = ctk.CTkLabel(
+                    error_frame,
+                    text="Se produjo un error durante el procesamiento:",
+                    font=("Arial", 12, "bold")
+                )
+                error_label.pack(pady=(0, 10))
+                
+                error_text = ctk.CTkTextbox(error_frame, height=200)
+                error_text.pack(fill="both", expand=True)
+                error_text.insert("1.0", error_message)
+                error_text.configure(state="disabled")
+                
+                # Botón para cerrar la ventana de error
+                close_button = ctk.CTkButton(
+                    error_frame,
+                    text="Cerrar",
+                    command=error_window.destroy
+                )
+                close_button.pack(pady=10)
+            
+            # Mostrar error en el hilo principal
+            self.after(0, lambda: show_error(str(e)))
+            self.after(0, lambda: self.status_label.configure(text="Error durante el procesamiento"))
         finally:
-            # Re-habilitar botones
-            self.process_button.configure(state="normal")
-            self.pdf_button.configure(state="normal")
-            self.dir_button.configure(state="normal")
+            # Re-habilitar botones en el hilo principal
+            self.after(0, lambda: self.process_button.configure(state="normal"))
+            self.after(0, lambda: self.pdf_button.configure(state="normal"))
+            self.after(0, lambda: self.dir_button.configure(state="normal"))
 
 def main():
     app = App()
